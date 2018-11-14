@@ -1,0 +1,93 @@
+    <div class="alert alert-{{alerta.tipo}}" role="alert" *ngIf="alerta.mensagem">
+    {{alerta.mensagem}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="clearMessage()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="card border-secondary mb-3">
+            <div class="card-header">Lista de usuarios</div>
+            <div class="card-body text-secondary">
+          
+              
+        
+                  <div class="row">
+                    <div class="col">
+                        <label>Nome:</label>
+                      <input type="text" class="form-control" [(ngModel)]="search_usuario">
+                    </div>
+                    <div class="col">
+                      <label>Situacao:</label>              
+                      <select class="form-control" name="search_situacao" [(ngModel)]="search_situacao">
+                        <option value="">Todos</option>
+                        <option *ngFor="let p of situacaoUsuarioExterno" [ngValue]="p">{{p.name}}</option>
+                      </select>
+                    </div>
+                    <div class="col">
+                    <label>Perfil:</label>
+                      <select class="form-control" name="search_perfil" [(ngModel)]="search_perfil">
+                        <option value="">Todos</option>
+                        <option *ngFor="let p of perfilUsuarioExterno" [ngValue]="p">{{p.name}}</option>
+                      </select>
+                    </div>
+                  </div>
+                
+                <br />
+                <p align="right">
+                <button type="button" (click)="search()" class="btn  btn-secondary" >Pesquisar</button>
+                </p>
+         
+               <p align="left">
+      
+                <a routerLink="/user/incluir"><button class="btn btn-secondary pull-right " >Incluir</button></a>
+                </p>
+
+                <table class="table table-striped table-sm">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>E-mail</th>
+                  <th>Perfil</th>
+                  <th>Funcao</th>
+                  <th>Habilitado</th>
+                  <th>Acoes</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <tr *ngFor="let usuario_externo of usuariosExternos">
+                  <td>{{usuario_externo.usuario}}</td>
+                  <td>{{usuario_externo.email}}</td>
+                  <td>{{usuario_externo.perfil_acesso.name}}</td>
+                  <td>{{usuario_externo.funcao.name}}</td>
+                  <td>
+                    
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                      <label class="btn btn-secondary " [ngClass]="getSituacao(usuario_externo.situacao) ? '' : 'active'">
+                        <input type="radio" name="options" id="option1" autocomplete="off"
+                        (click)="changeSituacao(usuario_externo.id)"
+                        > Ativo
+                      </label>
+                      <label class="btn btn-secondary" [ngClass]="getSituacao(usuario_externo.situacao) ? 'active' : ''">
+                        <input type="radio" name="options" id="option2" autocomplete="off" 
+                        checked="{{!getSituacao(usuario_externo.situacao)}}" 
+                         (click)="changeSituacao(usuario_externo.id)"> Inativo
+                      </label>
+                    </div>
+                                      
+                    </td>
+                  <td>
+
+                  <button type="button" class="btn  btn-secondary" (click)="getUsuarioExterno(usuario_externo.id)">Editar</button>
+                    
+                   <button type="button" class="btn  btn-secondary" (click)="removeUser(usuario_externo.id)">Remover</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+
+          
+            </div>
+          </div>
+       
